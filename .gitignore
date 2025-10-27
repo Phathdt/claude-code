@@ -4,3 +4,6 @@ shell-snapshots
 statsig
 ide
 .credentials.json
+debug
+file-history
+history.jsonl
