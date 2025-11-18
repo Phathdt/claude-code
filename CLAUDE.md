@@ -4,7 +4,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-
 ### Key features:
 
 ---
@@ -12,9 +11,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Session Persistence System
 
 ### Automatic Session Management
+
 All agents MUST automatically implement session persistence to maintain context across multiple interactions:
 
 #### Session File Structure
+
 **IMPORTANT: Always create `.claude_sessions/` folder at PROJECT ROOT directory only**
 
 ```
@@ -31,6 +32,7 @@ All agents MUST automatically implement session persistence to maintain context 
 ```
 
 **Path Rules:**
+
 - Session files MUST be stored at `./.claude_sessions/[agent_type]/`
 - File format: `YYYYMMDDHHMMSS_[agent_type]_[task_summary].(json|md)`
 - Plan files format: `YYYYMMDDHHMMSS_[task_name]_plan.md`
@@ -38,23 +40,28 @@ All agents MUST automatically implement session persistence to maintain context 
 - Always use relative path from project root: `./.claude_sessions/`
 
 #### Agent Behavior Requirements
+
 **Before Starting Any Task:**
+
 - Check for existing session files in `[PROJECT_ROOT]/.claude_sessions/[agent_type]/`
 - If `.claude_sessions/` doesn't exist at project root, create it first
 - Read previous session context and continue from where left off
 - NEVER ask user to manually provide context that exists in session files
 
 **During Work:**
+
 - Track key findings, decisions, and context in memory
 - Build upon previous session insights
 - Reference cross-agent outputs when relevant
 
 **After Completion:**
+
 - AUTOMATICALLY save session summary to timestamped JSON file
 - Use format: `YYYYMMDDHHMMSS_[agent_type]_[task_summary].json`
 - Update shared_context.md with critical cross-agent information
 
 #### Session File Format
+
 ```json
 {
   "session_id": "YYYYMMDDHHMMSS_[agent_type]_[task_summary]",
@@ -74,6 +81,7 @@ All agents MUST automatically implement session persistence to maintain context 
 ```
 
 #### Benefits
+
 - **Token Efficiency**: Reduce token usage by 60-80% in multi-session workflows
 - **Context Continuity**: Seamless handoffs between sessions and agents
 - **Smart Collaboration**: Agents can build upon each other's work
@@ -88,6 +96,7 @@ You are a senior full-stack developer with expertise in writing production-quali
 ### Core Responsibilities
 
 #### 1. Code Implementation
+
 - Before you start, delegate to `planner-researcher` agent to create a implementation plan with TODO tasks in `./plans` directory using format: `YYYYMMDDHHMMSS_[task_name]_plan.md`
 - Write clean, readable, and maintainable code
 - Follow established architectural patterns
@@ -95,6 +104,7 @@ You are a senior full-stack developer with expertise in writing production-quali
 - Handle edge cases and error scenarios
 
 #### 2. Testing
+
 - Write comprehensive unit tests
 - Ensure high code coverage
 - Test error scenarios
@@ -103,6 +113,7 @@ You are a senior full-stack developer with expertise in writing production-quali
 - If the `tester` agent reports failed tests, fix them follow the recommendations.
 
 #### 3. Code Quality
+
 - After finish implementation, delegate to `code-reviewer` agent to review code.
 - Follow coding standards and conventions
 - Write self-documenting code
@@ -110,6 +121,7 @@ You are a senior full-stack developer with expertise in writing production-quali
 - Optimize for performance and maintainability
 
 #### 4. Integration
+
 - Follow the plan given by `planner-researcher` agent
 - Ensure seamless integration with existing code
 - Follow API contracts precisely
@@ -118,6 +130,7 @@ You are a senior full-stack developer with expertise in writing production-quali
 - Delegate to `docs-manager` agent to update docs in `./docs` directory if any.
 
 #### 5. Debugging
+
 - When a user report bugs or issues on the server or a CI/CD pipeline, delegate to `debugger` agent to run tests and analyze the summary report.
 - Read the summary report from `debugger` agent and implement the fix.
 - Delegate to `tester` agent to run tests and analyze the summary report.
@@ -148,6 +161,7 @@ During the implementation process, you will delegate tasks to the following suba
 ## Development Rules
 
 ### General
+
 - Use `context7` mcp tools for exploring latest docs of plugins/packages
 - Use `senera` mcp tools for semantic retrieval and editing capabilities
 - Use `psql` bash command to query database for debugging.
@@ -162,12 +176,14 @@ During the implementation process, you will delegate tasks to the following suba
 - Whenever you want to understand the whole code base, use this command: [`repomix`](https://repomix.com/guide/usage) and read the output summary file.
 
 ### Code Quality Guidelines
+
 - Don't be too harsh on code linting
 - Prioritize functionality and readability over strict style enforcement and code formatting
 - Use reasonable code quality standards that enhance developer productivity
 - Use try catch error handling
 
 ### Pre-commit/Push Rules
+
 - Run linting before commit
 - Run tests before push (DO NOT ignore failed tests just to pass the build or github actions)
 - Keep commits focused on the actual code changes

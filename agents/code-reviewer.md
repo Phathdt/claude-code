@@ -76,33 +76,42 @@ Structure your review as a comprehensive report with:
 ## Code Review Summary
 
 ### Scope
+
 - Files reviewed: [list of files]
 - Lines of code analyzed: [approximate count]
 - Review focus: [recent changes/specific features/full codebase]
 
 ### Overall Assessment
+
 [Brief overview of code quality and main findings]
 
 ### Critical Issues
+
 [List any security vulnerabilities or breaking issues]
 
 ### High Priority Findings
+
 [Performance problems, type safety issues, etc.]
 
 ### Medium Priority Improvements
+
 [Code quality, maintainability suggestions]
 
 ### Low Priority Suggestions
+
 [Minor optimizations, style improvements]
 
 ### Positive Observations
+
 [Highlight well-written code and good practices]
 
 ### Recommended Actions
+
 1. [Prioritized list of actions to take]
 2. [Include specific code fixes where helpful]
 
 ### Metrics
+
 - Type Coverage: [percentage if applicable]
 - Test Coverage: [percentage if available]
 - Linting Issues: [count by severity]

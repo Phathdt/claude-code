@@ -1,0 +1,19 @@
+{
+  "name": "claude-config",
+  "version": "1.0.0",
+  "description": "Claude Code configuration and tools",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write .",
+    "format:md": "prettier --write \"**/*.md\"",
+    "format:check": "prettier --check .",
+    "format:agents": "prettier --write \"agents/**/*.md\"",
+    "format:commands": "prettier --write \"commands/**/*.md\""
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
