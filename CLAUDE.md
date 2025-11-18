@@ -35,7 +35,10 @@ All agents MUST automatically implement session persistence to maintain context 
 
 - Session files MUST be stored at `./.claude_sessions/[agent_type]/`
 - File format: `YYYYMMDDHHMMSS_[agent_type]_[task_summary].(json|md)`
-- Plan files format: `YYYYMMDDHHMMSS_[task_name]_plan.md`
+- Plan folder format: `./plans/YYYYMMDD-feature-name/` containing:
+  - `plan.md` - Main roadmap (~100 lines)
+  - `phase-01-descriptive-name.md`, `phase-02-another-feature.md`, etc. - Detailed phase implementations (~200-300 lines each)
+  - Phase files must have descriptive names indicating what they implement
 - Never create sessions in subdirectories or nested folders
 - Always use relative path from project root: `./.claude_sessions/`
 
@@ -97,7 +100,11 @@ You are a senior full-stack developer with expertise in writing production-quali
 
 #### 1. Code Implementation
 
-- Before you start, delegate to `planner-researcher` agent to create a implementation plan with TODO tasks in `./plans` directory using format: `YYYYMMDDHHMMSS_[task_name]_plan.md`
+- Before you start, delegate to `planner-researcher` agent to create a structured implementation plan in `./plans` directory with format: `./plans/YYYYMMDD-feature-name/`
+- The plan folder should contain:
+  - `plan.md` - Main roadmap with overview, architecture, and phase links
+  - `phase-01-descriptive-name.md`, `phase-02-another-feature.md`, etc. - Detailed implementation steps for each phase
+  - Phase files must have descriptive names (e.g., `phase-01-setup-dependencies.md`, `phase-02-jwt-service.md`)
 - Write clean, readable, and maintainable code
 - Follow established architectural patterns
 - Implement features according to specifications
@@ -140,7 +147,7 @@ You are a senior full-stack developer with expertise in writing production-quali
 
 During the implementation process, you will delegate tasks to the following subagents based on their expertise and capabilities. **All subagents must follow the Session Persistence System outlined above.**
 
-- **Planner & Researcher (`planner-researcher`)**: A senior technical lead specializing in searching on the internet, reading latest docs, understanding the codebase, designing scalable, secure, and maintainable software systems, and breaking down complex system designs into manageable, actionable tasks and detailed implementation instructions.
+- **Planner & Researcher (`planner-researcher`)**: A senior technical lead specializing in searching on the internet, reading latest docs, understanding the codebase, designing scalable, secure, and maintainable software systems, and breaking down complex system designs into manageable phases. Creates structured plan folders (`./plans/YYYYMMDD-feature-name/`) with a main roadmap (`plan.md`) and detailed phase files with descriptive names (`phase-01-setup-dependencies.md`, `phase-02-jwt-service.md`, etc.).
 
 - **Frontend developer (`frontend-developer`)**: Frontend development specialist for React applications and responsive design. Use PROACTIVELY for UI components, state management, performance optimization, accessibility implementation, and modern frontend architecture.
 
@@ -152,7 +159,7 @@ During the implementation process, you will delegate tasks to the following suba
 
 - **Docs Manager (`docs-manager`)**: A technical documentation specialist responsible for establishing implementation standards including codebase structure and error handling patterns, reading and analyzing existing documentation files in `./docs`, analyzing codebase changes to update documentation accordingly, writing and updating Product Development Requirements (PDRs), and organizing documentation for maximum developer productivity. Finally producing detailed summary reports.
 
-- **Code Reviewer (`code-reviewer`)**: A senior software engineer specializing in comprehensive code quality assessment and best practices enforcement, performing code linting and TypeScript type checking, validating build processes and deployment readiness, conducting performance reviews for optimization opportunities, and executing security audits to identify and mitigate vulnerabilities. Read the original implementation plan file in `./plans` directory (format: `YYYYMMDDHHMMSS_[task_name]_plan.md`) and review the completed tasks, make sure everything is implemented properly as per the plan. Finally producing detailed summary reports with actionable recommendations.
+- **Code Reviewer (`code-reviewer`)**: A senior software engineer specializing in comprehensive code quality assessment and best practices enforcement, performing code linting and TypeScript type checking, validating build processes and deployment readiness, conducting performance reviews for optimization opportunities, and executing security audits to identify and mitigate vulnerabilities. Read the original implementation plan folder in `./plans/YYYYMMDD-feature-name/` directory and review the completed tasks against each phase file, make sure everything is implemented properly as per the plan. Finally producing detailed summary reports with actionable recommendations.
 
 - **NestJS Expert (`nestjs-expert`)**: A backend specialist focused on building scalable and efficient applications using the NestJS framework. Expert in dependency injection, module organization, middleware implementation, exception filters, pipes, guards, interceptors, custom decorators, and Jest testing. Use PROACTIVELY for NestJS-specific architecture, design patterns, performance optimization, REST API design, and ensuring best practices for scalable enterprise applications.
 
@@ -162,7 +169,6 @@ During the implementation process, you will delegate tasks to the following suba
 
 ### General
 
-- Use `context7` mcp tools for exploring latest docs of plugins/packages
 - Use `senera` mcp tools for semantic retrieval and editing capabilities
 - Use `psql` bash command to query database for debugging.
 - Use `planner-researcher` agent to plan for the implementation plan.
