@@ -9,6 +9,7 @@ file-history
 history.jsonl
 plans
 session-env
+telemetry
 
 # Node modules and package manager files
 node_modules
