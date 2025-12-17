@@ -8,6 +8,7 @@ debug
 file-history
 history.jsonl
 plans
+session-env
 
 # Node modules and package manager files
 node_modules
