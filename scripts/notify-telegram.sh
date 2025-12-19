@@ -16,15 +16,22 @@ fi
 # Get message type from argument (default: "finished")
 MESSAGE_TYPE="${1:-finished}"
 
+# Get project name from current directory or git repo name
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    PROJECT_NAME=$(basename "$(git rev-parse --show-toplevel)")
+else
+    PROJECT_NAME=$(basename "$PWD")
+fi
+
 case "$MESSAGE_TYPE" in
     "stop")
-        MESSAGE="Claude Code finished working at $(date '+%Y-%m-%d %H:%M:%S')"
+        MESSAGE="<b>[$PROJECT_NAME]</b> Claude Code finished working at $(date '+%Y-%m-%d %H:%M:%S')"
         ;;
     "subagent")
-        MESSAGE="Claude Code subagent completed task at $(date '+%Y-%m-%d %H:%M:%S')"
+        MESSAGE="<b>[$PROJECT_NAME]</b> Claude Code subagent completed task at $(date '+%Y-%m-%d %H:%M:%S')"
         ;;
     *)
-        MESSAGE="Claude Code: $MESSAGE_TYPE at $(date '+%Y-%m-%d %H:%M:%S')"
+        MESSAGE="<b>[$PROJECT_NAME]</b> Claude Code: $MESSAGE_TYPE at $(date '+%Y-%m-%d %H:%M:%S')"
         ;;
 esac
 
