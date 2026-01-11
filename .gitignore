@@ -14,3 +14,7 @@ telemetry
 # Node modules and package manager files
 node_modules
 pnpm-lock.yaml
+stats-cache.json
+cache
+paste-cache
+plugins/known_marketplaces.json
