@@ -1,0 +1,62 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/phathdt/Data/Dev/optimex"]
+    },
+    "grafana-dev": {
+      "type": "stdio",
+      "command": "mcp-grafana",
+      "args": [],
+      "env": {
+        "HTTP_PROXY": "http://100.89.29.63:8888",
+        "HTTPS_PROXY": "http://100.89.29.63:8888",
+        "GRAFANA_URL": "https://grafana-dev.bitdex.xyz",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "echo $GRAFANA_SERVICE_ACCOUNT_TOKEN_DEV"
+      }
+    },
+    "grafana-stg": {
+      "type": "stdio",
+      "command": "mcp-grafana",
+      "args": [],
+      "env": {
+        "HTTP_PROXY": "http://100.89.29.63:8888",
+        "HTTPS_PROXY": "http://100.89.29.63:8888",
+        "GRAFANA_URL": "https://grafana-stg.bitdex.xyz",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "echo $GRAFANA_SERVICE_ACCOUNT_TOKEN_STG"
+      }
+    },
+    "grafana-prod": {
+      "type": "stdio",
+      "command": "mcp-grafana",
+      "args": [],
+      "env": {
+        "HTTP_PROXY": "http://100.89.29.63:8888",
+        "HTTPS_PROXY": "http://100.89.29.63:8888",
+        "GRAFANA_URL": "https://grafana.bitfi.xyz",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "echo $GRAFANA_SERVICE_ACCOUNT_TOKEN_PROD"
+      }
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@brave/brave-search-mcp-server",
+        "--transport=stdio"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "tavily": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "tavily-mcp"
+      ],
+      "env": {
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
+      }
+    }
+  }
+}
