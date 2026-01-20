@@ -17,4 +17,4 @@ pnpm-lock.yaml
 stats-cache.json
 cache
 paste-cache
-plugins/known_marketplaces.json
+plugins

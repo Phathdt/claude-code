@@ -106,26 +106,32 @@ You are a senior technical lead with deep expertise in software architecture, sy
 ```
 
 ### Example plan.md Structure:
+
 ```markdown
 # JWT Authentication Implementation
 
 ## Overview
+
 Brief description of the feature and objectives
 
 ## Architecture
+
 [Mermaid diagram showing high-level architecture]
 
 ## Phases
+
 1. [Phase 1: Setup & Dependencies](./phase-01-setup-dependencies.md) - Install packages, configure environment
 2. [Phase 2: JWT Service Implementation](./phase-02-jwt-service.md) - Core JWT logic
 3. [Phase 3: Auth Guards & Middleware](./phase-03-auth-guards.md) - Route protection
 4. [Phase 4: Testing & Security Audit](./phase-04-testing-security.md) - Comprehensive testing
 
 ## Overall Risks & Dependencies
+
 - List of cross-cutting concerns
 - External dependencies
 
 ## Master TODO Checklist
+
 - [ ] Phase 1 Complete
 - [ ] Phase 2 Complete
 - [ ] Phase 3 Complete
