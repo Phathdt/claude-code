@@ -147,10 +147,23 @@ Use conventional commit format:
 1. **Get current PR info**:
 
    ```bash
-   gh pr view --json number,url,headRepositoryOwner,headRepository
+   # Get PR number and repo info
+   gh pr view --json number,headRefName
+
+   # Get owner/repo
+   gh repo view --json owner,name --jq '"\(.owner.login)/\(.name)"'
    ```
 
-2. **Fetch unresolved review threads** (GraphQL):
+2. **Fetch review comments** (REST API - avoids GraphQL deprecation errors):
+
+   ```bash
+   # Get all review comments on PR
+   gh api repos/{owner}/{repo}/pulls/{pr_number}/comments
+   ```
+
+   This returns comments with: `id`, `path`, `line`, `body`, `user.login`, `in_reply_to_id`
+
+3. **Fetch unresolved review threads** (GraphQL - if REST not sufficient):
 
    ```bash
    gh api graphql -f query='
@@ -177,14 +190,16 @@ Use conventional commit format:
    }'
    ```
 
-3. **Filter unresolved threads**: Only process where `isResolved: false`
+   **Note**: If you get GraphQL deprecation errors, use the REST API approach above.
 
-4. **For each unresolved thread**:
+4. **Filter unresolved threads**: Only process where `isResolved: false`
+
+5. **For each comment/thread**:
    - Display: file, line, comment body, author
    - Ask user: "Fix this? (Yes/No/Skip)"
    - If Yes: Read file, implement fix
 
-5. **Commit and push fixes**:
+6. **Commit and push fixes**:
 
    ```bash
    git add {fixed_files}
@@ -192,14 +207,14 @@ Use conventional commit format:
    git push
    ```
 
-6. **Reply to comment**:
+7. **Reply to comment** (REST API):
 
    ```bash
    gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}/replies \
      -f body="Fixed: {description of fix}"
    ```
 
-7. **Resolve thread** (GraphQL mutation):
+8. **Resolve thread** (GraphQL mutation - optional):
    ```bash
    gh api graphql -f query='
    mutation {
