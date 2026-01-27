@@ -47,11 +47,46 @@ If not authenticated, guide user to run `gh auth login`.
    git diff --stat
    ```
 
-2. **Determine base branch** (in order of priority):
+2. **Create new branch** (if on main/master/develop):
+
+   ```bash
+   # Check current branch
+   current_branch=$(git branch --show-current)
+
+   # If on protected branch, create new branch
+   if [[ "$current_branch" =~ ^(main|master|develop|staging)$ ]]; then
+     # Create descriptive branch name based on changes
+     git checkout -b feat/descriptive-name
+     # Or for fixes:
+     git checkout -b fix/issue-description
+   fi
+   ```
+
+   Branch naming conventions:
+   - `feat/feature-name` - New features
+   - `fix/bug-description` - Bug fixes
+   - `refactor/what-changed` - Refactoring
+   - `docs/what-documented` - Documentation
+   - `chore/task-name` - Maintenance tasks
+
+3. **Stage and commit changes**:
+
+   ```bash
+   git add <specific_files>
+   git commit -m "feat: descriptive commit message"
+   ```
+
+4. **Push branch to remote**:
+
+   ```bash
+   git push -u origin $(git branch --show-current)
+   ```
+
+6. **Determine base branch** (in order of priority):
    - If user specifies: use that branch
    - Auto-detect from git log:
      ```bash
-     git log --oneline --decorate | grep -E 'origin/(main|staging|develop)' | head -1
+     git log --oneline --decorate | grep -E 'origin/(main|master|staging|develop)' | head -1
      ```
    - Check branch config:
      ```bash
@@ -59,13 +94,13 @@ If not authenticated, guide user to run `gh auth login`.
      ```
    - Fallback: `main`
 
-3. **Get commit history for PR body**:
+8. **Get commit history for PR body**:
 
    ```bash
    git log --oneline $(git merge-base HEAD origin/{base})..HEAD
    ```
 
-4. **Create PR with detailed body**:
+9. **Create PR with detailed body**:
 
    ```bash
    gh pr create --title "feat: descriptive title" --body "$(cat <<'EOF'
