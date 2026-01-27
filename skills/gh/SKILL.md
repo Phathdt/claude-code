@@ -144,22 +144,23 @@ Use conventional commit format:
 
 ### Steps
 
-1. **Get current PR info**:
+1. **Get current PR number**:
 
    ```bash
-   # Get PR number and repo info
-   gh pr view --json number,headRefName
-
-   # Get owner/repo
-   gh repo view --json owner,name --jq '"\(.owner.login)/\(.name)"'
+   gh pr view --json number --jq '.number'
    ```
 
 2. **Fetch review comments** (REST API - avoids GraphQL deprecation errors):
 
    ```bash
-   # Get all review comments on PR
-   gh api repos/{owner}/{repo}/pulls/{pr_number}/comments
+   # gh auto-detects owner/repo from current directory
+   gh pr view {pr_number} --json comments
+
+   # Or use REST API directly
+   gh api repos/:owner/:repo/pulls/{pr_number}/comments
    ```
+
+   Note: `:owner/:repo` is auto-replaced by `gh` from current git remote.
 
    This returns comments with: `id`, `path`, `line`, `body`, `user.login`, `in_reply_to_id`
 
@@ -210,7 +211,7 @@ Use conventional commit format:
 7. **Reply to comment** (REST API):
 
    ```bash
-   gh api repos/{owner}/{repo}/pulls/{pr}/comments/{comment_id}/replies \
+   gh api repos/:owner/:repo/pulls/{pr}/comments/{comment_id}/replies \
      -f body="Fixed: {description of fix}"
    ```
 
@@ -384,10 +385,14 @@ Mergeable: Yes
 
 ## Utility Commands
 
-### Get owner/repo
+### Get owner/repo (if needed)
 
 ```bash
-gh repo view --json owner,name --jq '"\(.owner.login)/\(.name)"'
+# gh auto-detects from git remote, but if needed explicitly:
+git remote -v | grep origin | head -1 | awk '{print $2}' | sed 's/.*github.com[:/]\(.*\)\.git/\1/'
+
+# Or use :owner/:repo placeholder in gh api (auto-replaced)
+gh api repos/:owner/:repo
 ```
 
 ### Get current branch
