@@ -208,15 +208,16 @@ Use conventional commit format:
    git push
    ```
 
-7. **Reply to comment** (REST API):
+7. **Reply to comment AND resolve thread** (REQUIRED for each fixed comment):
 
    ```bash
+   # Step 1: Reply to the comment explaining the fix
    gh api repos/:owner/:repo/pulls/{pr}/comments/{comment_id}/replies \
      -f body="Fixed: {description of fix}"
    ```
 
-8. **Resolve thread** (GraphQL mutation - optional):
    ```bash
+   # Step 2: Resolve the thread (MUST do this after replying)
    gh api graphql -f query='
    mutation {
      resolveReviewThread(input: {threadId: "{thread_id}"}) {
@@ -224,6 +225,8 @@ Use conventional commit format:
      }
    }'
    ```
+
+   **IMPORTANT**: Always reply AND mark as resolved after fixing. Never leave threads unresolved.
 
 ---
 
