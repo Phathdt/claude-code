@@ -11,7 +11,7 @@ $ARGUMENTS
 Use the `gh` skill (section "1. Creating Pull Requests") to:
 
 1. Check `git status` and `git diff --stat` to analyze changes
-2. Create new branch if on protected branch (main/master/develop/staging)
+2. Always create a new branch (generate descriptive name from changes)
 3. Stage and commit changes with conventional commit message
 4. Push branch to remote with `-u` flag
 5. Determine base branch (use argument if provided, otherwise auto-detect)
