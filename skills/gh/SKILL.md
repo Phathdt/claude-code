@@ -212,7 +212,8 @@ Use conventional commit format:
 
    ```bash
    # Step 1: Reply to the comment explaining the fix
-   gh api repos/:owner/:repo/pulls/{pr}/comments/{comment_id}/replies \
+   # IMPORTANT: The endpoint requires the PR number in the path
+   gh api repos/:owner/:repo/pulls/{pr_number}/comments/{comment_id}/replies \
      -f body="Fixed: {description of fix}"
    ```
 

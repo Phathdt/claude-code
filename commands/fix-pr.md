@@ -17,10 +17,10 @@ Use the `gh` skill (section "2. Fixing PR Review Comments") to:
    - Ask user: "Fix this? (Yes/No/Skip)"
    - If Yes: Read file, implement fix
 4. Commit and push fixes: `fix(pr): address review comments`
-5. **REQUIRED**: For each fixed comment:
-   - Reply with fix description
-   - Resolve the thread via GraphQL mutation
-6. Never leave threads unresolved
+5. **CRITICAL - For EACH fixed comment, you MUST do BOTH**:
+   a. Reply to comment: `gh api repos/:owner/:repo/pulls/{pr_number}/comments/{comment_id}/replies -f body="Fixed: ..."`
+   b. Get thread ID via GraphQL query, then resolve: `gh api graphql -f query='mutation { resolveReviewThread(input: {threadId: "{thread_id}"}) { thread { isResolved } } }'`
+6. **NEVER skip resolving threads** - every fixed comment must be replied to AND resolved
 
 ## Usage
 
