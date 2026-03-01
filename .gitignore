@@ -19,3 +19,4 @@ cache
 paste-cache
 plugins
 tasks
+/.claude.json

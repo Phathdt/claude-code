@@ -7,7 +7,6 @@
     "DISABLE_BUG_COMMAND": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
-  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -36,7 +35,9 @@
     "padding": 0
   },
   "alwaysThinkingEnabled": false,
+  "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754206918255
-  }
+  },
+  "model": "opus"
 }
